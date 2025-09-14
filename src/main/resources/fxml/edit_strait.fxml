@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.daru_jo.ui.EditStraitController">
+   <children>
+      <ComboBox fx:id="region" layoutX="104.0" layoutY="32.0" onAction="#selectRegion" prefWidth="150.0" promptText="Регион" />
+      <Label layoutX="20.0" layoutY="74.0" text="Магазин" />
+      <ComboBox fx:id="shop" layoutX="104.0" layoutY="70.0" onAction="#selectShop" prefHeight="25.0" prefWidth="149.0" promptText="Номер магазина" />
+      <Label layoutX="20.0" layoutY="111.0" text="Касса" />
+      <ComboBox fx:id="cash" layoutX="104.0" layoutY="111.0" prefHeight="25.0" prefWidth="149.0" promptText="Номер кассы" />
+      <Label layoutX="14.0" layoutY="158.0" prefHeight="50.0" prefWidth="85.0" text="Номер заявки в For-It" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" wrapText="true" />
+      <TextField fx:id="forIt" layoutX="104.0" layoutY="166.0" promptText="SC0000000000" />
+      <Label layoutX="287.0" layoutY="32.0" text="Дата" />
+      <DatePicker fx:id="dateStrait" layoutX="376.0" layoutY="32.0" promptText="Дата пролива" />
+      <Label layoutX="287.0" layoutY="74.0" text="Время начала" />
+      <ChoiceBox fx:id="timeStart" layoutX="376.0" layoutY="70.0" prefWidth="150.0" />
+      <Label layoutX="287.0" layoutY="115.0" text="Время конца" />
+      <ChoiceBox fx:id="timeEnd" layoutX="376.0" layoutY="107.0" prefWidth="150.0" />
+      <Label layoutX="287.0" layoutY="166.0" text="ФИО заказчика" />
+      <TextField fx:id="requesterFIO" layoutX="376.0" layoutY="166.0" promptText="ФИО" />
+
+      <TextField fx:id="codeStrait" disable="true" layoutX="-134.0" layoutY="68.0" translateX="300.0" translateY="150.0" />
+      <Button fx:id="generate" layoutX="66.0" layoutY="218.0" mnemonicParsing="false" onAction="#generate" text="Генерация" />
+      <Button fx:id="copyBuf" layoutX="344.0" layoutY="218.0" mnemonicParsing="false" onAction="#copy" text="В буфер" />
+      <Label layoutX="19.0" layoutY="36.0" prefHeight="17.0" prefWidth="47.0" text="Регион" />
+
+
+   </children>
+</AnchorPane>
