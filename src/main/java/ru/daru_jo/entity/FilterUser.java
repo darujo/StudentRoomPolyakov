@@ -1,18 +1,16 @@
 package ru.daru_jo.entity;
 
-import java.time.LocalDate;
-
 public class FilterUser {
     private final String fio;
     private final Boolean sex;
     private final String specialization;
-    private final Long room;
+    private final Long roomId;
 
-    public FilterUser(String fio, Boolean sex, String specialization, Long room) {
+    public FilterUser(String fio, Boolean sex, String specialization, Long roomId) {
         this.fio = fio;
         this.sex = sex;
         this.specialization = specialization;
-        this.room = room;
+        this.roomId = roomId;
     }
 
     public FilterUser() {
@@ -30,7 +28,7 @@ public class FilterUser {
         return specialization;
     }
 
-    public Long getRoom() {
-        return room;
+    public Long getRoomId() {
+        return roomId;
     }
 }

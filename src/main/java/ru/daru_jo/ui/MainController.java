@@ -46,7 +46,7 @@ public class MainController {
     public void initialize() {
         // Этап инициализации JavaFX
         init();
-        userService =UserService.getInstance();
+        userService = UserService.getInstance();
     }
 
     /**
@@ -73,7 +73,7 @@ public class MainController {
         TableColumn<User, String> roomColumn = new TableColumn<>("Комната");
         roomColumn.setCellValueFactory(new PropertyValueFactory<>("timeStartStr"));
 
-        table.getColumns().setAll(fioColumn, specColumn,sexColumn,roomColumn);
+        table.getColumns().setAll(fioColumn, specColumn, sexColumn, roomColumn);
 
         // Данные таблицы
         table.setItems(data);
@@ -97,7 +97,7 @@ public class MainController {
 
     public void setFilter(FilterUser filterStrait) {
         data.clear();
-        data.setAll(UserService.findAll(filterStrait));
+        data.setAll(userService.findAll(filterStrait));
     }
 
     public void viewFilter(ActionEvent actionEvent) {

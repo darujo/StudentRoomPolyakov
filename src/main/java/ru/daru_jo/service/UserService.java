@@ -26,10 +26,6 @@ public class UserService {
         return userRepository.findAll(filterStrait);
     }
 
-    public Optional<User> findByFio(String fio) {
-        return userRepository.findByFio(fio);
-    }
-
     public void checkNull(String filed, String text) {
         if (filed == null || filed.isEmpty()) {
             throw new UsernameNotFoundException("Не заполнено поле " + text);
