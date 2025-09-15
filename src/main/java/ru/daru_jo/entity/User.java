@@ -11,6 +11,14 @@ public class User {
 
     private Long roomId;
 
+    public User(Long id, String fio, Integer sex, String specialization, Long roomId) {
+        this.id = id;
+        this.fio = fio;
+        this.sex = sex;
+        this.specialization = specialization;
+        this.roomId = roomId;
+    }
+
     public User(Long id, String fio, Integer sex, String specialization) {
         this.id = id;
         this.fio = fio;

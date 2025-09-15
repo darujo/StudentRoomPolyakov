@@ -11,15 +11,12 @@
       <HBox alignment="CENTER" layoutX="21.0" layoutY="207.0" prefHeight="50.0" prefWidth="300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
          <children>
            <Button minWidth="-Infinity" mnemonicParsing="false" onAction="#edit" text="Добавить" />
-             <Button minWidth="-Infinity" mnemonicParsing="false" onAction="#prevPage" text="Предыдущая страница" />
-             <Button minWidth="-Infinity" mnemonicParsing="false" onAction="#nextPage" text="Следующая страница" />
-             <Button minWidth="-Infinity" mnemonicParsing="false" onAction="#print" text="Печать" />
 
              <MenuBar>
               <menus>
                 <Menu mnemonicParsing="false" text="Меню">
                   <items>
-                    <MenuItem mnemonicParsing="false" onAction="#addFile" text="Загрузить справочник" />
+                    <MenuItem mnemonicParsing="false" onAction="#print" text="Печать" />
                     <MenuItem mnemonicParsing="false" onAction="#viewFilter" text="Фильтр" />
                   </items>
                 </Menu>

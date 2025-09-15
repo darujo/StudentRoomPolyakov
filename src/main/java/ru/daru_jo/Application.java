@@ -11,7 +11,7 @@ import ru.daru_jo.config.ControllersConfiguration;
 import ru.daru_jo.dialogs.Dialogs;
 import ru.daru_jo.entity.FilterUser;
 import ru.daru_jo.entity.User;
-import ru.daru_jo.ui.EditStraitController;
+import ru.daru_jo.ui.EditUserController;
 import ru.daru_jo.ui.MainController;
 
 import java.io.IOException;
@@ -103,7 +103,7 @@ public class Application extends AbstractJavaFxApplicationSupport {
         if (editStage == null) {
             initEditDialog();
         }
-        ((EditStraitController) viewEdit.getController()).reShow();
+        ((EditUserController) viewEdit.getController()).reShow();
         editStage.show();
     }
 

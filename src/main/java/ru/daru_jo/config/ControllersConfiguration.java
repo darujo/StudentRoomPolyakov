@@ -11,7 +11,7 @@ public class ControllersConfiguration {
         return loadView("fxml/main.fxml");
     }
     public ViewHolder getEditView() throws IOException {
-        return loadView("fxml/edit_strait.fxml");
+        return loadView("fxml/edit_user.fxml");
     }
     public ViewHolder getFilterView() throws IOException {
         return loadView("fxml/filter-view.fxml");

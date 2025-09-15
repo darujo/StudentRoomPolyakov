@@ -7,9 +7,13 @@ public class Room {
 
     private String specialization;
 
-    public Room(Long id, Integer sex, String specialization) {
+    private Integer maxStudent;
+
+
+    public Room(Long id, Integer sex, String specialization,Integer maxStudent) {
         this.id = id;
         this.sex = sex;
+        this.maxStudent = maxStudent;
         this.specialization = specialization;
     }
 
@@ -23,5 +27,9 @@ public class Room {
 
     public String getSpecialization() {
         return specialization;
+    }
+
+    public Integer getMaxStudent() {
+        return maxStudent;
     }
 }

@@ -3,31 +3,32 @@ package ru.daru_jo.service;
 import ru.daru_jo.entity.FilterUser;
 import ru.daru_jo.entity.User;
 import ru.daru_jo.exceptions.UsernameNotFoundException;
-import ru.daru_jo.repository.UserRepository;
+import ru.daru_jo.repository.RoomRepository;
 
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
 
 
-public class UserService {
-    private static UserService instance;
-    public static UserService getInstance(){
+public class RoomService {
+    private static RoomService instance;
+    public static RoomService getInstance(){
         if(instance == null){
-            instance = new UserService();
+            instance = new RoomService();
         }
         return instance;
     }
-    public UserService() {
-        this.userRepository = new UserRepository();
+    public RoomService() {
+        this.roomRepository = new RoomRepository();
     }
 
-    private final UserRepository userRepository;
+    private final RoomRepository roomRepository;
 
     public List<User> findAll(FilterUser filterStrait) {
-        return userRepository.findAll(filterStrait);
+        return roomRepository.findAll(filterStrait);
     }
 
     public Optional<User> findByFio(String fio) {
-        return userRepository.findByFio(fio);
+        return roomRepository.findByFio(fio);
     }
 
     public void checkNull(String filed, String text) {
@@ -41,16 +42,16 @@ public class UserService {
         checkNull(user.getFio(), "ФИО");
 
         if (user.getId() != null) {
-            if (userRepository.findByFioAndIdIsNot(user.getFio(), user.getId()).isPresent()) {
+            if (roomRepository.findByFioAndIdIsNot(user.getFio(), user.getId()).isPresent()) {
                 throw new UsernameNotFoundException("Уже есть пользователь с таким  ФИО");
             }
-            User saveUser = userRepository.findById(user.getId()).orElseThrow(() -> new UsernameNotFoundException("Пользователь с id " + user.getId() + " не найден"));
+            User saveUser = roomRepository.findById(user.getId()).orElseThrow(() -> new UsernameNotFoundException("Пользователь с id " + user.getId() + " не найден"));
         } else {
-            if (userRepository.findByFioIgnoreCase(user.getFio()).isPresent()) {
+            if (roomRepository.findByFioIgnoreCase(user.getFio()).isPresent()) {
                 throw new UsernameNotFoundException("Уже есть пользователь с таким ФИО");
             }
         }
-        return userRepository.save(user);
+        return roomRepository.save(user);
     }
 
     public List<User> getUserList() {

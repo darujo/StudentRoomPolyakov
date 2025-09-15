@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.daru_jo.ui.EditRoomController">
+   <children>
+      <Label layoutX="10.0" layoutY="20.0" text="Комната" />
+      <TextField fx:id="name" layoutX="100.0" layoutY="20.0"  />
+
+      <Label layoutX="20.0" layoutY="74.0" text="Пол" />
+      <ChoiceBox fx:id="sex" layoutX="104.0" layoutY="70.0"  prefHeight="25.0" prefWidth="149.0" />
+      <Label layoutX="20.0" layoutY="111.0" text="Специальность" />
+      <ChoiceBox fx:id="specialization" layoutX="104.0" layoutY="111.0" prefHeight="25.0" prefWidth="149.0" />
+      <Label layoutX="10.0" layoutY="20.0" text="Колличество учащихся" />
+      <TextField fx:id="maxStudent" layoutX="100.0" layoutY="20.0"  />
+
+      <Button fx:id="generate" layoutX="66.0" layoutY="218.0" mnemonicParsing="false" onAction="#generate" text="Создать" />
+
+
+   </children>
+</AnchorPane>
