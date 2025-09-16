@@ -6,6 +6,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.TextField;
 import ru.daru_jo.Application;
 import ru.daru_jo.entity.User;
+import ru.daru_jo.exceptions.UsernameNotFoundException;
 import ru.daru_jo.service.CodeService;
 import ru.daru_jo.service.UserService;
 
@@ -43,12 +44,19 @@ public class EditUserController {
         if (checkAll()) {
             return;
         }
-        User user = userService.addUser(
-                fio.getText(),
-                CodeService.isMan(sex.getValue()),
-                specialization.getValue()
-        );
-        Application.getInstance().addUser(user);
+        try {
+
+
+            User user = userService.addUser(
+                    fio.getText(),
+                    CodeService.isMan(sex.getValue()),
+                    specialization.getValue()
+            );
+
+            Application.getInstance().addUser(user);
+        } catch (UsernameNotFoundException ex){
+            Application.showMes(ex.getMessage());
+        }
 
 
     }
@@ -62,8 +70,14 @@ public class EditUserController {
         if (checkFio()) {
             addMes(stringBuilder, "ФИО студента не может состоять только из пробелов и точек, ФИО студента состоять из букв кириллицы пробелов и точек");
         }
+        if (sex.getValue()== null || sex.getValue().isEmpty()) {
+            addMes(stringBuilder, "Пол должен быть заполнен");
+        }
+        if (specialization.getValue()== null || specialization.getValue().isEmpty()) {
+            addMes(stringBuilder, "Спецальность  должен быть заполнена");
+        }
 
-        if (!stringBuilder.isEmpty()) {
+        if (stringBuilder.length() !=0) {
             Application.showMes(stringBuilder.toString());
             return true;
         }
@@ -72,7 +86,7 @@ public class EditUserController {
 
 
     private void addMes(StringBuilder stringBuilder, String text) {
-        if (!stringBuilder.isEmpty()) {
+        if (stringBuilder.length() !=0) {
             stringBuilder.append(", ");
         }
         stringBuilder.append(text);

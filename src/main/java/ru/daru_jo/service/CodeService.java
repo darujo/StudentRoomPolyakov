@@ -27,7 +27,17 @@ public class CodeService {
         return sex;
     }
 
-    public static boolean isMan(String sex) {
+    public static String getSex(boolean isMan) {
+        if (isMan) {
+            return "Мужской";
+        } else{
+            return "Женский";
+        }
+    }
+    public static Boolean isMan(String sex) {
+        if (sex == null){
+            return null;
+        }
         return sex.equalsIgnoreCase("Мужской");
     }
 }

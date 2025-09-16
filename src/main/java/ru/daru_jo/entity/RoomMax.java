@@ -2,22 +2,23 @@ package ru.daru_jo.entity;
 
 import ru.daru_jo.service.CodeService;
 
-public class Room {
+public class RoomMax {
     private Integer id;
     private String name;
 
-    private Integer  sex;
+    private Integer sex;
 
     private String specialization;
 
     private Integer maxStudent;
+    private Integer countStudent;
 
-
-    public Room(Integer id, String name, Integer sex, String specialization,Integer maxStudent) {
+    public RoomMax(Integer id, String name, Integer sex, String specialization, Integer countStudent, Integer maxStudent) {
         this.id = id;
-        this.name =name;
+        this.name = name;
         this.sex = sex;
         this.maxStudent = maxStudent;
+        this.countStudent = countStudent;
         this.specialization = specialization;
     }
 
@@ -27,6 +28,10 @@ public class Room {
 
     public Integer getSex() {
         return sex;
+    }
+
+    public String getSexStr() {
+        return CodeService.getSex(sex == 1);
     }
 
     public String getSpecialization() {
@@ -41,7 +46,7 @@ public class Room {
         return name;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public Integer getCountStudent() {
+        return countStudent;
     }
 }

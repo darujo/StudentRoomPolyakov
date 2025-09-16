@@ -28,7 +28,7 @@ public class Dialogs {
 
     public static void showDialog(Alert.AlertType dialogType, String title, String type, String message) {
         Alert alert = new Alert(dialogType);
-        alert.initOwner(Application.getAuthStage());
+        alert.initOwner(Application.getBrowseStage());
         alert.setTitle(title);
         alert.setHeaderText(type);
         alert.setContentText(message);

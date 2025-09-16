@@ -4,23 +4,18 @@
 <?import javafx.scene.layout.*?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.daru_jo.ui.FilterController">
-   <children>
-      <TextField fx:id="regionFx" layoutX="151.0" layoutY="32.0" />
-      <TextField fx:id="shopFx" layoutX="151.0" layoutY="79.0" onKeyReleased="#changeNumberShopFX" />
-      <TextField fx:id="cashFx" layoutX="151.0" layoutY="124.0" onKeyReleased="#changeNumberCashFX" />
-      <TextField fx:id="requesterFX" layoutX="151.0" layoutY="207.0" />
-      <DatePicker fx:id="dateGe" layoutX="151.0" layoutY="165.0" prefHeight="25.0" prefWidth="149.0" />
-      <DatePicker fx:id="dateLe" layoutX="371.0" layoutY="165.0" prefHeight="25.0" prefWidth="157.0" />
-      <Label layoutX="54.0" layoutY="36.0" text="Регион" />
-      <Label layoutX="28.0" layoutY="83.0" text="Номер магазина" />
-      <Label layoutX="46.0" layoutY="128.0" text="Номер кассы" />
-      <Label layoutX="9.0" layoutY="169.0" text="Дата действия пароля с" />
-      <Label layoutX="330.0" layoutY="169.0" text="по" />
-      <Label layoutX="54.0" layoutY="211.0" text="Заказчик" />
-      <Button fx:id="buttonOk" layoutX="104.0" layoutY="278.0" mnemonicParsing="false" onAction="#saveFilter" text="Применить" />
-      <Button fx:id="buttonCancel" layoutX="183.0" layoutY="278.0" mnemonicParsing="false" onAction="#cancel" text="Отмена" />
-      <Button fx:id="buttonReset" layoutX="241.0" layoutY="278.0" mnemonicParsing="false" onAction="#resetFilter" text="Сбросить" />
-      <ChoiceBox fx:id="sizePage" layoutX="392.0" layoutY="32.0" prefWidth="150.0" />
-      <Label layoutX="316.0" layoutY="36.0" text="Элементов" />
-   </children>
+    <children>
+        <Label layoutX="20.0" layoutY="24.0" text="ФИО заказчика" />
+        <TextField fx:id="fio" layoutX="118.0" layoutY="20.0" promptText="ФИО" />
+        <Label layoutX="20.0" layoutY="62.0" text="Пол" />
+        <ChoiceBox fx:id="sex" layoutX="118.0" layoutY="58.0" prefHeight="25.0" prefWidth="149.0" />
+        <Label layoutX="21.0" layoutY="103.0" text="Специальность" />
+        <ChoiceBox fx:id="specialization" layoutX="118.0" layoutY="99.0" prefHeight="25.0" prefWidth="149.0" />
+        <Label layoutX="19.0" layoutY="149.0" text="Комната" />
+        <TextField fx:id="roomIdFx" layoutX="118.0" layoutY="145.0" onKeyReleased="#changeRoomIdFx" promptText="Номер комнаты" />
+
+        <Button fx:id="buttonOk" layoutX="104.0" layoutY="278.0" mnemonicParsing="false" onAction="#saveFilter" text="Применить" />
+        <Button fx:id="buttonCancel" layoutX="183.0" layoutY="278.0" mnemonicParsing="false" onAction="#cancel" text="Отмена" />
+        <Button fx:id="buttonReset" layoutX="241.0" layoutY="278.0" mnemonicParsing="false" onAction="#resetFilter" text="Сбросить" />
+    </children>
 </AnchorPane>

@@ -16,8 +16,11 @@ public class UserService {
         }
         return instance;
     }
+    UserRoomService userRoomService;
     public UserService() {
+        instance = this;
         this.userRepository = new UserRepository();
+        this.userRoomService = UserRoomService.getInstance();
     }
 
     private final UserRepository userRepository;
@@ -56,6 +59,14 @@ public class UserService {
 
     public User addUser(String fio, Boolean sex, String specialization) {
         User user = new User(null,fio,sex? 1:0,specialization);
+        userRoomService.addRoomIdForUser(user);
+        if (user.getRoomId() == null){
+            throw new UsernameNotFoundException("Не удалось найти свободную комнату для пола и специальности "   );
+        }
         return saveUser(user);
+    }
+
+    public Integer countUser(int roomId) {
+        return userRepository.countUser(roomId);
     }
 }

@@ -10,7 +10,10 @@ import ru.daru_jo.config.AbstractJavaFxApplicationSupport;
 import ru.daru_jo.config.ControllersConfiguration;
 import ru.daru_jo.dialogs.Dialogs;
 import ru.daru_jo.entity.FilterUser;
+import ru.daru_jo.entity.Room;
 import ru.daru_jo.entity.User;
+import ru.daru_jo.ui.BrowseRoomController;
+import ru.daru_jo.ui.EditRoomController;
 import ru.daru_jo.ui.EditUserController;
 import ru.daru_jo.ui.MainController;
 
@@ -21,6 +24,8 @@ public class Application extends AbstractJavaFxApplicationSupport {
 
     private static Stage editStage;
     private Stage filterStage;
+    private static Stage browseRoomStage;
+    private static Stage editRoomStage;
 
     private final String windowTitle = "Студенты";
 
@@ -29,6 +34,9 @@ public class Application extends AbstractJavaFxApplicationSupport {
     public void setFilter(FilterUser filterStrait) {
         ((MainController) viewBrowse.getController()).setFilter(filterStrait);
     }
+
+    private ControllersConfiguration.ViewHolder browseRoom;
+    private ControllersConfiguration.ViewHolder editRoom;
 
     private ControllersConfiguration.ViewHolder viewEdit;
     private ControllersConfiguration.ViewHolder viewFilter;
@@ -52,6 +60,8 @@ public class Application extends AbstractJavaFxApplicationSupport {
         try {
             viewBrowse = controllersConfiguration.getMainView();
             viewEdit = controllersConfiguration.getEditView();
+            browseRoom = controllersConfiguration.getBrowseRoomView();
+            editRoom = controllersConfiguration.getEditRoomView();
             viewFilter = controllersConfiguration.getFilterView();
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -59,7 +69,7 @@ public class Application extends AbstractJavaFxApplicationSupport {
 
         browseStage = stagePrimary;
         initBrowseDialog();
-        browseStage.show();
+        openBrowseStage();
     }
 
     private void initEditDialog() {
@@ -73,6 +83,27 @@ public class Application extends AbstractJavaFxApplicationSupport {
         editStage.centerOnScreen();
 
 
+    }
+
+    private void initRoomBrowseDialog() {
+        browseRoomStage = new Stage();
+        browseRoomStage.initOwner(browseStage);
+        browseRoomStage.initModality(Modality.WINDOW_MODAL);
+
+        browseRoomStage.setTitle("Комнаты");
+        browseRoomStage.setScene(new Scene(browseRoom.getView()));
+        browseRoomStage.setResizable(true);
+        browseRoomStage.centerOnScreen();
+    }
+    private void initRoomEditDialog() {
+        editRoomStage = new Stage();
+        editRoomStage.initOwner(browseRoomStage);
+        editRoomStage.initModality(Modality.WINDOW_MODAL);
+
+        editRoomStage.setTitle("Добавление комнаты");
+        editRoomStage.setScene(new Scene(editRoom.getView()));
+        editRoomStage.setResizable(true);
+        editRoomStage.centerOnScreen();
     }
 
     private Stage initDialog(String title, Parent parent) {
@@ -107,6 +138,21 @@ public class Application extends AbstractJavaFxApplicationSupport {
         editStage.show();
     }
 
+    public void roomBrowseShow() {
+        if (browseRoomStage == null) {
+            initRoomBrowseDialog();
+        }
+        ((BrowseRoomController) browseRoom.getController()).reShow();
+        browseRoomStage.show();
+    }
+    public void roomEditShow() {
+        if (editRoomStage == null) {
+            initRoomEditDialog();
+        }
+        ((EditRoomController) editRoom.getController()).reShow();
+        editRoomStage.show();
+    }
+
     public void filterShow() {
         if (filterStage == null) {
             initFilterDialog();
@@ -139,5 +185,9 @@ public class Application extends AbstractJavaFxApplicationSupport {
 
     public void addUser(User user) {
         ((MainController) viewBrowse.getController()).addUser(user);
+    }
+
+    public void addRoom(Room room) {
+        ((BrowseRoomController) browseRoom.getController()).addRoom(room);
     }
 }

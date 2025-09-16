@@ -17,6 +17,12 @@ public class ControllersConfiguration {
         return loadView("fxml/filter-view.fxml");
     }
 
+    public ViewHolder getBrowseRoomView() throws IOException{
+        return loadView("fxml/browse-room.fxml");
+    }
+    public ViewHolder getEditRoomView() throws IOException{
+        return loadView("fxml/edit_room.fxml");
+    }
     protected ViewHolder loadView(String url) throws IOException {
         try (InputStream fxmlStream = getClass().getClassLoader().getResourceAsStream(url)) {
             FXMLLoader loader = new FXMLLoader();
@@ -24,6 +30,8 @@ public class ControllersConfiguration {
             return new ViewHolder(loader.getRoot(), loader.getController());
         }
     }
+
+
 
     public class ViewHolder {
         private Parent view;

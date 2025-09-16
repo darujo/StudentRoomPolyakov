@@ -21,13 +21,13 @@ public class UserRepository {
             prepInsert.setString(1, fio);
             ResultSet resultSet = prepInsert.executeQuery();
             while (resultSet.next()) {
-                user = new User(resultSet.getLong("id"),
+                user = new User(resultSet.getInt("id"),
                         resultSet.getString("fio"),
                         resultSet.getInt("sex"),
                         resultSet.getString("specialization"),
-                        resultSet.getLong("room_id")
+                        resultSet.getInt("room_id")
                 );
-                return Optional.ofNullable(user);
+//                return Optional.ofNullable(user);
             }
         } catch (SQLException e) {
             return null;
@@ -37,48 +37,69 @@ public class UserRepository {
         return Optional.ofNullable(user);
     }
 
-    public Optional<User> findByFioAndIdIsNot(String fio, Long id) {
+    public int findLast() {
+        Connection connection = ConnectionCenter.getInstance().getConnection();
+        int id = 0;
+        try (PreparedStatement prepInsert = connection.prepareStatement("SELECT id FROM usersStorage ORDER BY id DESC LIMIT 1;")) {
+
+            ResultSet resultSet = prepInsert.executeQuery();
+            while (resultSet.next()) {
+                id = resultSet.getInt("id");
+
+            }
+            return id;
+        } catch (SQLException e) {
+            return 0;
+        } finally {
+            ConnectionCenter.getInstance().disableConnect(connection);
+
+        }
+
+    }
+
+    public Optional<User> findByFioAndIdIsNot(String fio, Integer id) {
         Connection connection = ConnectionCenter.getInstance().getConnection();
         User user = null;
 
-        try (PreparedStatement prepInsert = connection.prepareStatement("SELECT id,fio, sex, specialization, room_id FROM usersStorage WHERE  fio = ? and id is not null ")) {
+        try (PreparedStatement prepInsert = connection.prepareStatement("SELECT id,fio, sex, specialization, room_id FROM usersStorage WHERE  fio = ? and id != ? ")) {
             prepInsert.setString(1, fio);
+            prepInsert.setInt(2, id);
             ResultSet resultSet = prepInsert.executeQuery();
             while (resultSet.next()) {
-                user = new User(resultSet.getLong("id"),
+                user = new User(resultSet.getInt("id"),
                         resultSet.getString("fio"),
                         resultSet.getInt("sex"),
                         resultSet.getString("specialization"),
-                        resultSet.getLong("room_id")
+                        resultSet.getInt("room_id")
                 );
-                return Optional.ofNullable(user);
+//                return Optional.ofNullable(user);
             }
         } catch (SQLException e) {
-            return null;
+            return Optional.empty();
         } finally {
             ConnectionCenter.getInstance().disableConnect(connection);
         }
         return Optional.ofNullable(user);
     }
 
-    public Optional<User> findById(Long id) {
+    public Optional<User> findById(Integer id) {
         Connection connection = ConnectionCenter.getInstance().getConnection();
         User user = null;
 
         try (PreparedStatement prepInsert = connection.prepareStatement("SELECT id,fio, sex, specialization, room_id FROM usersStorage WHERE id = ? COLLATE NOCASE")) {
-            prepInsert.setLong(1, id);
+            prepInsert.setInt(1, id);
             ResultSet resultSet = prepInsert.executeQuery();
             while (resultSet.next()) {
-                user = new User(resultSet.getLong("id"),
+                user = new User(resultSet.getInt("id"),
                         resultSet.getString("fio"),
                         resultSet.getInt("sex"),
                         resultSet.getString("specialization"),
-                        resultSet.getLong("room_id")
+                        resultSet.getInt("room_id")
                 );
 
             }
         } catch (SQLException e) {
-            return null;
+            return Optional.empty();
         } finally {
             ConnectionCenter.getInstance().disableConnect(connection);
         }
@@ -103,13 +124,16 @@ public class UserRepository {
     }
 
     public void addUser(User user) throws SQLException {
+        int id = findLast() + 1;
         Connection connection = ConnectionCenter.getInstance().getConnection();
 
-        try (PreparedStatement prepInsert = connection.prepareStatement("INSERT INTO usersStorage (fio, sex, specialization,room_id) VALUES (?,?,?,?)")) {
+        try (PreparedStatement prepInsert = connection.prepareStatement("INSERT INTO usersStorage (fio, sex, specialization, room_id, id) VALUES (?,?,?,?,?)")) {
             prepInsert.setString(1, user.getFio());
             prepInsert.setInt(2, user.getSex());
             prepInsert.setString(3, user.getSpecialization());
-            prepInsert.setLong(4, user.getRoomId());
+            prepInsert.setInt(4, user.getRoomId());
+            prepInsert.setInt(5, id);
+
             prepInsert.execute();
         } finally {
             ConnectionCenter.getInstance().disableConnect(connection);
@@ -124,17 +148,12 @@ public class UserRepository {
             prepInsert.setString(1, user.getFio());
             prepInsert.setInt(2, user.getSex());
             prepInsert.setString(3, user.getSpecialization());
-            prepInsert.setLong(4, user.getRoomId());
-            prepInsert.setLong(4, user.getId());
+            prepInsert.setInt(4, user.getRoomId());
+            prepInsert.setInt(5, user.getId());
             prepInsert.execute();
         } finally {
             ConnectionCenter.getInstance().disableConnect(connection);
         }
-    }
-
-
-    public List<User> findAll() {
-        return new ArrayList<>();
     }
 
     public List<User> findAll(FilterUser filterUser) {
@@ -142,8 +161,8 @@ public class UserRepository {
         StringBuilder command;
         boolean first = true;
         command = new StringBuilder();
-        if (filterUser.getFio() != null) {
-            command.append("UPPER(fio) LIKE UPPER('%?%')");
+        if (filterUser.getFio() != null && !filterUser.getFio().isEmpty()) {
+            command.append(" fio = ? ");
             first = false;
         }
         if (filterUser.getRoomId() != null) {
@@ -163,31 +182,32 @@ public class UserRepository {
         } else {
             command.insert(0, "SELECT id,fio, sex, specialization, room_id FROM usersStorage WHERE ");
         }
-        command.append("where usersStorage.id = ? ");
+//        command.append("where usersStorage.id = ? ");
+//        command.append(" COLLATE NOCASE ");
         Connection connection = ConnectionCenter.getInstance().getConnection();
 
         try (PreparedStatement prepSelect = connection.prepareStatement(command.toString())) {
             int count = 1;
-            if (filterUser.getFio() != null) {
+            if (filterUser.getFio() != null && !filterUser.getFio().isEmpty()) {
                 prepSelect.setString(count++, filterUser.getFio());
             }
             if (filterUser.getRoomId() != null) {
-                prepSelect.setLong(count++, filterUser.getRoomId());
+                prepSelect.setInt(count++, filterUser.getRoomId());
             }
             if (filterUser.getSex() != null) {
                 prepSelect.setInt(count++, filterUser.getSex() ? 1 : 0);
             }
             if (filterUser.getSpecialization() != null) {
-                prepSelect.setString(count++, filterUser.getSpecialization());
+                prepSelect.setString(count, filterUser.getSpecialization());
             }
 
             ResultSet resultSet = prepSelect.executeQuery();
             while (resultSet.next()) {
-                User user = new User(resultSet.getLong("id"),
+                User user = new User(resultSet.getInt("id"),
                         resultSet.getString("fio"),
                         resultSet.getInt("sex"),
                         resultSet.getString("specialization"),
-                        resultSet.getLong("room_id")
+                        resultSet.getInt("room_id")
                 );
                 users.add(user);
             }
@@ -198,5 +218,9 @@ public class UserRepository {
         }
 
         return users;
+    }
+
+    public Integer countUser(int roomId) {
+        return findAll (new FilterUser(null,null,null,roomId)).size();
     }
 }

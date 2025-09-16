@@ -1,34 +1,35 @@
 package ru.daru_jo.service;
 
-import ru.daru_jo.entity.FilterUser;
-import ru.daru_jo.entity.User;
+import ru.daru_jo.entity.FilterRoom;
+import ru.daru_jo.entity.Room;
+import ru.daru_jo.entity.RoomMax;
 import ru.daru_jo.exceptions.UsernameNotFoundException;
 import ru.daru_jo.repository.RoomRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 
 public class RoomService {
     private static RoomService instance;
-    public static RoomService getInstance(){
-        if(instance == null){
+
+    public static RoomService getInstance() {
+        if (instance == null) {
             instance = new RoomService();
         }
         return instance;
     }
-    public RoomService() {
-        this.roomRepository = new RoomRepository();
-    }
-
     private final RoomRepository roomRepository;
+    private final UserRoomService userRoomService;
 
-    public List<User> findAll(FilterUser filterStrait) {
-        return roomRepository.findAll(filterStrait);
+    public RoomService() {
+        instance = this;
+        this.roomRepository = new RoomRepository();
+        this.userRoomService = UserRoomService.getInstance();
     }
 
-    public Optional<User> findByFio(String fio) {
-        return roomRepository.findByFio(fio);
+
+    public List<Room> findAll(FilterRoom filterRoom) {
+        return roomRepository.findAll(filterRoom);
     }
 
     public void checkNull(String filed, String text) {
@@ -37,30 +38,24 @@ public class RoomService {
         }
     }
 
-    public User saveUser(User user) {
-
-        checkNull(user.getFio(), "ФИО");
-
-        if (user.getId() != null) {
-            if (roomRepository.findByFioAndIdIsNot(user.getFio(), user.getId()).isPresent()) {
-                throw new UsernameNotFoundException("Уже есть пользователь с таким  ФИО");
-            }
-            User saveUser = roomRepository.findById(user.getId()).orElseThrow(() -> new UsernameNotFoundException("Пользователь с id " + user.getId() + " не найден"));
-        } else {
-            if (roomRepository.findByFioIgnoreCase(user.getFio()).isPresent()) {
-                throw new UsernameNotFoundException("Уже есть пользователь с таким ФИО");
-            }
-        }
-        return roomRepository.save(user);
+    public Room saveRoom(Room room) {
+        return roomRepository.save(room);
     }
 
-    public List<User> getUserList() {
-        return findAll(new FilterUser());
+    public List<Room> getRoomList(Boolean sex, String specialization) {
+        return findAll(new FilterRoom(sex, specialization));
     }
 
 
-    public User addUser(String fio, Boolean sex, String specialization) {
-        User user = new User(null,fio,sex? 1:0,specialization);
-        return saveUser(user);
+    public Room addRoom(String name, Boolean sex, String specialization, Integer maxStudent) {
+        Room room = new Room(null, name, sex ? 1 : 0, specialization, maxStudent);
+        return saveRoom(room);
+    }
+
+    public RoomMax roomToRoomMax(Room room) {
+        return userRoomService.roomToRoomMax (room);
+    }
+    public List<RoomMax> getRoomMaxList(Boolean sex, String specialization) {
+        return userRoomService.getRoomMaxList(sex,specialization);
     }
 }

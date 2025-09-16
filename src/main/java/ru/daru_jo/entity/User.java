@@ -1,7 +1,9 @@
 package ru.daru_jo.entity;
 
+import ru.daru_jo.service.CodeService;
+
 public class User {
-    private Long id;
+    private Integer id;
 
     private String fio;
 
@@ -9,9 +11,9 @@ public class User {
 
     private String specialization;
 
-    private Long roomId;
+    private Integer roomId;
 
-    public User(Long id, String fio, Integer sex, String specialization, Long roomId) {
+    public User(Integer id, String fio, Integer sex, String specialization, Integer roomId) {
         this.id = id;
         this.fio = fio;
         this.sex = sex;
@@ -19,18 +21,18 @@ public class User {
         this.roomId = roomId;
     }
 
-    public User(Long id, String fio, Integer sex, String specialization) {
+    public User(Integer id, String fio, Integer sex, String specialization) {
         this.id = id;
         this.fio = fio;
         this.sex = sex;
         this.specialization = specialization;
     }
 
-    public void setRoomId(Long roomId) {
+    public void setRoomId(Integer roomId) {
         this.roomId = roomId;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -41,12 +43,15 @@ public class User {
     public Integer getSex() {
         return sex;
     }
+    public String getSexStr() {
+        return CodeService.getSex(sex == 1);
+    }
 
     public String getSpecialization() {
         return specialization;
     }
 
-    public Long getRoomId() {
+    public Integer getRoomId() {
         return roomId;
     }
 }
