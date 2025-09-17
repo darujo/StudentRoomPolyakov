@@ -20,16 +20,6 @@
                 <Button minWidth="-Infinity" mnemonicParsing="false" onAction="#edit" text="Добавить"/>
                 <Button minWidth="-Infinity" mnemonicParsing="false" onAction="#viewRooms" text="Комнаты"/>
                 <Button minWidth="-Infinity" mnemonicParsing="false" onAction="#viewFilter" text="Фильтр"/>
-<!--                <MenuBar>-->
-<!--                    <menus>-->
-<!--                        <Menu mnemonicParsing="false" text="Меню">-->
-<!--                            <items>-->
-<!--                                <MenuItem mnemonicParsing="false" onAction="#print" text="Печать"/>-->
-<!--                                <MenuItem mnemonicParsing="false" onAction="#viewFilter" text="Фильтр"/>-->
-<!--                            </items>-->
-<!--                        </Menu>-->
-<!--                    </menus>-->
-<!--                </MenuBar>-->
             </children>
         </HBox>
     </children>
